@@ -8,7 +8,7 @@ from googleapiclient.discovery import build
 # === Configuration ===
 SPREADSHEET_ID = '1S3FRJTnXoEirGv6ohSNTo-bH6wnoIrdCYL5O5INb290'
 SHEET_NAME = 'Sheet1'
-GEMINI_API_KEY = 'AIzaSyAQNIHFjGIVTWRotb7ZSz1L6SwFoz_Uolg'
+GEMINI_API_KEY = ''
 GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite-preview:generateContent'
 
 SHEET_HEADERS = ["Company Name", "Application Status", "Role", "Salary", "Date Submitted", "Link to Job Req", "Rejection Reason"]

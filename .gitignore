@@ -1,0 +1,9 @@
+# Credentials & Tokens
+credentials.json
+token.json
+modim417.json
+meetmodi400.json
+
+# Python virtual environment
+venv/
+__pycache__/

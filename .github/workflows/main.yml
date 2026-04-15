@@ -37,5 +37,6 @@ jobs:
       - name: Run Job Tracker Script
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
         run: |
           python tracker.py

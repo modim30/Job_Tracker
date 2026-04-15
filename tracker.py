@@ -20,6 +20,7 @@ GEMINI_MODEL_CANDIDATES = [
     'gemini-3.1-flash-lite-preview',
     'gemini-2.5-flash-lite',
 ]
+FETCH_LOOKBACK_HOURS = int(os.environ.get('FETCH_LOOKBACK_HOURS', '12'))
 MAX_RETRIES = 5
 EMAIL_CHUNK_SIZE = 50
 
@@ -37,6 +38,7 @@ SHEET_HEADERS = [
 def fetch_emails():
     accounts = ['meetmodi400.json', 'modim417.json']
     all_raw_emails = []
+    query_newer_unix = int(time.time() - (FETCH_LOOKBACK_HOURS * 3600))
 
     def decode_base64url(data):
         if not data:
@@ -98,7 +100,7 @@ def fetch_emails():
             query = (
                 '(application OR "thank you for applying" OR "we received your application" '
                 'OR "not moving forward" OR "unfortunately" OR "interview" OR "offer" OR "thanks") '
-                'newer_than:4d'
+                f'newer:{query_newer_unix}'
                 )
 
             results = service.users().messages().list(

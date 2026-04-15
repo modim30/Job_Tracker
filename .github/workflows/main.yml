@@ -1,0 +1,41 @@
+name: Run Job Tracker Automation
+
+on:
+  schedule:
+    # Runs at minute 0 past every 6th hour (e.g., midnight, 6am, noon, 6pm UTC)
+    - cron: '0 */6 * * *'
+  workflow_dispatch: 
+    # Allows you to click a "Run workflow" button manually for testing
+
+jobs:
+  run-tracker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          # Ensure you have all the required Google libraries and requests
+          pip install requests google-api-python-client google-auth google-auth-httplib2 google-auth-oauthlib
+
+      - name: Recreate Google Auth JSON files
+        env:
+          MEETMODI_CREDS: ${{ secrets.MEETMODI_JSON }}
+          MODIM_CREDS: ${{ secrets.MODIM_JSON }}
+        run: |
+          echo "$MEETMODI_CREDS" > meetmodi400.json
+          echo "$MODIM_CREDS" > modim417.json
+
+      - name: Run Job Tracker Script
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python tracker.py
